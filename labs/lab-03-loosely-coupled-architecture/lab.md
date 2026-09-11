@@ -40,11 +40,11 @@ docker compose ps
 **Task:** Test the frontend and API paths.
 
 ```bash
-curl http://localhost:8083/
-curl http://localhost:8083/api/
+curl -w '\n' http://localhost:8083/
+curl -w '\n' http://localhost:8083/api/
 ```
 
-**Expected result:** Both return different content — `/api/` returns `API BACKEND`.
+**Expected result:** Two different answers from the same address: `/` returns `<h1>FRONTEND</h1>` (the web tier) and `/api/` returns `API BACKEND` (the API tier).
 
 ---
 
@@ -91,10 +91,10 @@ docker exec lab3-rabbit rabbitmqadmin get queue=orders ackmode=ack_requeue_false
 
 ```bash
 docker compose stop api
-curl http://localhost:8083/
+curl -w '\n' http://localhost:8083/
 ```
 
-**Expected result:** The frontend remains available.
+**Expected result:** `<h1>FRONTEND</h1>` is still returned: the frontend stays up while the API is down.
 
 ---
 
@@ -102,11 +102,11 @@ curl http://localhost:8083/
 
 | Check | Expected |
 |---|---|
-| Step 2 — Path-based routing | Both return different content — `/api/` returns `API BACKEND` |
+| Step 2 — Path-based routing | Two different answers from the same address: `/` returns `<h1>FRONTEND</h1>` (the web tier) and `/api/` returns `API BACKEND` (the API tier) |
 | Step 3 — Create a message queue | `orders` is listed |
 | Step 4 — Publish a message | `Message published` |
 | Step 5 — Consume the message | `ORDER-1001` is returned |
-| Step 6 — Failure isolation | The frontend remains available |
+| Step 6 — Failure isolation | `<h1>FRONTEND</h1>` is still returned: the frontend stays up while the API is down |
 
 ## Completion check
 
