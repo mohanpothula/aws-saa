@@ -97,7 +97,7 @@ docker inspect lab2-db --format '{{json .NetworkSettings.Networks}}'
 
 **Task:** Edit `docker-compose.yml` so `app` also joins `isolated-net`. Do **not** publish DB port 3306.
 
-Open `docker-compose.yml` in any editor and add `isolated-net` to the **app** service's `networks:` list, then save the file. Leave the `db` service unchanged, with no `ports:`:
+First prove the path is broken: `docker exec lab2-app nc -zv db 3306` prints `nc: bad address 'db'`, because the app cannot even see the database. Then open `docker-compose.yml` in any editor, add `isolated-net` to the **app** service's `networks:` list, and save the file. Do not change the `db` service, and do not give it a `ports:` section:
 
 ```yaml
   app:
@@ -115,6 +115,7 @@ Check that the file saved: `grep -A8 '^  app:' docker-compose.yml` must show `is
 ```bash
 docker compose up -d --force-recreate app alb
 docker exec lab2-app nc -zv db 3306
+docker port lab2-db
 ```
 
 **Expected result:** `db (…:3306) open` — the database is reachable from the app, yet `docker port lab2-db` still prints nothing.
