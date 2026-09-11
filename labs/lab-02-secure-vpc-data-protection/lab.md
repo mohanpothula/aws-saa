@@ -94,11 +94,22 @@ docker inspect lab2-db --format '{{json .NetworkSettings.Networks}}'
 
 **Task:** Edit `docker-compose.yml` so `app` also joins `isolated-net`. Do **not** publish DB port 3306.
 
+Open `docker-compose.yml` in any editor and add `isolated-net` to the **app** service's `networks:` list, then save the file. Leave the `db` service unchanged, with no `ports:`:
+
+```yaml
+  app:
+    image: nginx:alpine
+    container_name: lab2-app
+    volumes:
+      - "./app-index.html:/usr/share/nginx/html/index.html:ro"
+    networks:
+      - private-net
+      - isolated-net      # add this line
+```
+
+Check that the file saved: `grep -A8 '^  app:' docker-compose.yml` must show `isolated-net`. Then recreate the app and test the path:
+
 ```bash
-# in docker-compose.yml, under the app service:
-#   networks:
-#     - private-net
-#     - isolated-net
 docker compose up -d --force-recreate app alb
 docker exec lab2-app nc -zv db 3306
 ```
@@ -114,15 +125,14 @@ docker exec lab2-app nc -zv db 3306
 **Task:** Confirm the bucket is encrypted with a KMS key.
 
 ```bash
-docker exec -it aws-saa-lab2 bash
-awslocal kms list-aliases
-awslocal s3api get-bucket-encryption --bucket lab2-secure-data
-awslocal s3 ls s3://lab2-secure-data
+docker exec aws-saa-lab2 awslocal kms list-aliases
+docker exec aws-saa-lab2 awslocal s3api get-bucket-encryption --bucket lab2-secure-data
+docker exec aws-saa-lab2 awslocal s3 ls s3://lab2-secure-data
 ```
 
 **Expected result:** Encryption reports `aws:kms` and `secure.txt` exists.
 
-> The first command opens a shell **inside** the LocalStack container; the three `awslocal` commands run there. Type `exit` to return to your own terminal.
+> Each command runs `awslocal` inside the LocalStack container and returns to your terminal, so you can paste all three at once. If `get-bucket-encryption` reports `NoSuchBucket`, LocalStack was restarted and its in-memory data was reset: wait for `READY` again (`until docker compose logs localstack 2>&1 | grep -q "created successfully"; do sleep 2; done; echo READY`) and re-run the commands.
 
 ---
 
