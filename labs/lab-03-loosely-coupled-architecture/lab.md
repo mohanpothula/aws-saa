@@ -44,6 +44,13 @@ curl -w '\n' http://localhost:8083/
 curl -w '\n' http://localhost:8083/api/
 ```
 
+Your terminal should show:
+
+```text
+<h1>FRONTEND</h1>
+API BACKEND
+```
+
 **Expected result:** Two different answers from the same address: `/` returns `<h1>FRONTEND</h1>` (the web tier) and `/api/` returns `API BACKEND` (the API tier).
 
 ---
@@ -92,6 +99,12 @@ docker exec lab3-rabbit rabbitmqadmin get queue=orders ackmode=ack_requeue_false
 ```bash
 docker compose stop api
 curl -w '\n' http://localhost:8083/
+```
+
+Your terminal should show:
+
+```text
+<h1>FRONTEND</h1>
 ```
 
 **Expected result:** `<h1>FRONTEND</h1>` is still returned: the frontend stays up while the API is down.
