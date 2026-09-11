@@ -1,0 +1,13 @@
+services:
+  origin:
+    image: nginx:alpine
+    container_name: lab7-origin
+    volumes: ["./index.html:/usr/share/nginx/html/index.html:ro"]
+  edge:
+    image: nginx:alpine
+    container_name: lab7-edge
+    ports: ["8087:80"]
+    volumes: ["./edge.conf:/etc/nginx/nginx.conf:ro"]
+  stream:
+    image: redis:7-alpine
+    container_name: lab7-stream

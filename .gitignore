@@ -1,0 +1,19 @@
+# Credentials and local configuration
+.env
+.env.*
+!.env.example
+
+# Files learners create while doing the labs
+backup.sql
+*.override.yml
+
+# Build, QA and archive outputs
+build/
+dist/
+archive/
+qa/
+__pycache__/
+*.pyc
+*.tmp
+~$*
+.DS_Store

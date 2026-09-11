@@ -1,0 +1,13 @@
+services:
+  app:
+    image: nginx:alpine
+    container_name: lab8-app
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+  store:
+    image: minio/minio
+    container_name: lab8-store
+    command: server /data
+    environment: ["MINIO_ROOT_USER=minioadmin","MINIO_ROOT_PASSWORD=minioadmin"]

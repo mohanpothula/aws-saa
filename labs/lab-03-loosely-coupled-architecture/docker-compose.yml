@@ -1,0 +1,18 @@
+services:
+  front:
+    image: nginx:alpine
+    container_name: lab3-front
+    volumes: ["./front.html:/usr/share/nginx/html/index.html:ro"]
+  api:
+    image: hashicorp/http-echo:1.0
+    container_name: lab3-api
+    command: ["-text=API BACKEND","-listen=:5678"]
+  lb:
+    image: nginx:alpine
+    container_name: lab3-lb
+    ports: ["8083:80"]
+    volumes: ["./nginx.conf:/etc/nginx/nginx.conf:ro"]
+  rabbit:
+    image: rabbitmq:3-management-alpine
+    container_name: lab3-rabbit
+    ports: ["15683:15672"]

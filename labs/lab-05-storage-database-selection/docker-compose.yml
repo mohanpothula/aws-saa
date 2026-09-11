@@ -1,0 +1,13 @@
+services:
+  db:
+    image: mariadb:11
+    container_name: lab5-db
+    environment: ["MARIADB_ROOT_PASSWORD=Pass123!","MARIADB_DATABASE=labdb"]
+  redis:
+    image: redis:7-alpine
+    container_name: lab5-redis
+  minio:
+    image: minio/minio
+    container_name: lab5-minio
+    command: server /data
+    environment: ["MINIO_ROOT_USER=minioadmin","MINIO_ROOT_PASSWORD=minioadmin"]

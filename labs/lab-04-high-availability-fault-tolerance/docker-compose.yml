@@ -1,0 +1,18 @@
+services:
+  primary:
+    image: nginx:alpine
+    container_name: lab4-primary
+    volumes: ["./primary.html:/usr/share/nginx/html/index.html:ro"]
+  secondary:
+    image: nginx:alpine
+    container_name: lab4-secondary
+    volumes: ["./secondary.html:/usr/share/nginx/html/index.html:ro"]
+  proxy:
+    image: haproxy:alpine
+    container_name: lab4-proxy
+    ports: ["8084:80"]
+    volumes: ["./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro"]
+  db:
+    image: mariadb:11
+    container_name: lab4-db
+    environment: ["MARIADB_ROOT_PASSWORD=Pass123!","MARIADB_DATABASE=appdb"]
