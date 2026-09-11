@@ -130,7 +130,7 @@ docker exec aws-saa-lab2 awslocal s3api get-bucket-encryption --bucket lab2-secu
 docker exec aws-saa-lab2 awslocal s3 ls s3://lab2-secure-data
 ```
 
-**Expected result:** Encryption reports `aws:kms` and `secure.txt` exists.
+**Expected result:** Three separate results, one per command: (1) the key alias `alias/lab2-s3-key`; (2) `SSEAlgorithm` is `aws:kms`, with the same key ID as in (1); (3) the file `secure.txt` in the bucket.
 
 > Each command runs `awslocal` inside the LocalStack container and returns to your terminal, so you can paste all three at once. If `get-bucket-encryption` reports `NoSuchBucket`, LocalStack was restarted and its in-memory data was reset: wait for `READY` again (`until docker compose logs localstack 2>&1 | grep -q "created successfully"; do sleep 2; done; echo READY`) and re-run the commands.
 
@@ -145,7 +145,7 @@ docker exec aws-saa-lab2 awslocal s3 ls s3://lab2-secure-data
 | Step 4 — Validate the isolated database | `docker port` prints nothing — `lab2-db` has no host-published port |
 | Step 5 — Network security challenge | App is on `private-net` only; DB is on `isolated-net` only. They share no network, so there is no path between them |
 | Step 6 — Fix App → DB connectivity | `db (…:3306) open` — the database is reachable from the app, yet `docker port lab2-db` still prints nothing |
-| Step 7 — Verify KMS / S3 encryption | Encryption reports `aws:kms` and `secure.txt` exists |
+| Step 7 — Verify KMS / S3 encryption | Three separate results, one per command: (1) the key alias `alias/lab2-s3-key`; (2) `SSEAlgorithm` is `aws:kms`, with the same key ID as in (1); (3) the file `secure.txt` in the bucket |
 
 ## Completion check
 
