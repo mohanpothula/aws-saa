@@ -22,9 +22,12 @@ Work with a relational database, an in-memory cache and object storage side by s
 
 ## Step 1 — Get the lab source and start the lab
 
+The repo lives in `~/Downloads/aws-saa`. The paths are absolute, so these commands work from any folder. `git clone` is needed only once: if the repo is already there it prints `already exists`, and the next line still takes you into this lab.
+
 ```bash
+cd ~/Downloads
 git clone https://github.com/mohanpothula/aws-saa.git
-cd aws-saa/labs/lab-05-storage-database-selection
+cd ~/Downloads/aws-saa/labs/lab-05-storage-database-selection
 docker compose up -d
 docker compose ps
 ```

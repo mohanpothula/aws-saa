@@ -24,9 +24,12 @@ Practise IAM users, groups, roles, least-privilege policies and explicit DENY ag
 
 ## Step 1 — Get the lab source and start the lab
 
+The repo lives in `~/Downloads/aws-saa`. The paths are absolute, so these commands work from any folder. `git clone` is needed only once: if the repo is already there it prints `already exists`, and the next line still takes you into this lab.
+
 ```bash
+cd ~/Downloads
 git clone https://github.com/mohanpothula/aws-saa.git
-cd aws-saa/labs/lab-01-iam-account-security
+cd ~/Downloads/aws-saa/labs/lab-01-iam-account-security
 docker compose up -d
 # wait for the init script to finish creating the IAM resources
 until docker compose logs localstack 2>&1 | grep -q "created successfully"; do sleep 2; done; echo READY

@@ -22,9 +22,12 @@ Measure what is actually consumed, spot idle capacity, move data to an archive t
 
 ## Step 1 — Get the lab source and start the lab
 
+The repo lives in `~/Downloads/aws-saa`. The paths are absolute, so these commands work from any folder. `git clone` is needed only once: if the repo is already there it prints `already exists`, and the next line still takes you into this lab.
+
 ```bash
+cd ~/Downloads
 git clone https://github.com/mohanpothula/aws-saa.git
-cd aws-saa/labs/lab-08-cost-optimisation
+cd ~/Downloads/aws-saa/labs/lab-08-cost-optimisation
 docker compose up -d
 docker compose ps
 ```
